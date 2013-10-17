@@ -1,12 +1,13 @@
 <?php
 include_once("menu.php");
 
+//seleccion del usuario
 $query="SELECT * FROM `usuario` WHERE idusuario='".$_GET['id']."'";   
 $usuario=mysql_query($query) or die(mysql_error());
 $row_usuario = mysql_fetch_assoc($usuario);
 mysql_query("SET NAMES 'utf8'");
 
-
+//para departamentos
 $query="SELECT * FROM `departamento` ORDER BY nombre ASC";   
 $departamento=mysql_query($query) or die(mysql_error());
 $row_departamento = mysql_fetch_assoc($departamento);
@@ -19,7 +20,7 @@ $numero_filas = mysql_num_rows($departamento);
 <div class="span9">
 <center>
 
-
+<!-- formulario de modificacion-->
 <form class="form-inline" action="index.php">
 <table class="table table-hover">
 <tr>

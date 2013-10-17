@@ -12,12 +12,35 @@ mysql_query("SET NAMES 'utf8'");
 $numero_filas = mysql_num_rows($departamento);
 
 ?>
+
+<?php 
+
+$nombre = $_GET['nombre']; 
+
+// Comprobamos si el usuario esta registrado 
+
+$nuevo_usuario=mysql_query("select nombre from usuario where nombre='$nombre'"); 
+if(mysql_num_rows($nuevo_usuario)>0) 
+{ 
+echo " 
+<p class='avisos'>El nombre de usuario ya esta registrado</p> 
+<p class='avisos'><A class='btn btn-danger'  href='javascript:history.go(-1)'><i class='icon-arrow-left'></i> Volver</A></p> 
+"; 
+}else{ 
+
+?>
 <div class="span9">
 <center>
 <?
+
+//Buscamos el ultimo id registrado y le sumamos uno
+//Hacemos esto porque la tabla de usuario no tiene id autoincrement
+
 $ultimoid=$row_idusuario['idusuario'];
 $ultimoid=$ultimoid+1;
 $estado=1;
+
+//Creamos el usuario
 
 	mysql_query("INSERT INTO `usuario` (
 				idusuario,
@@ -33,9 +56,11 @@ $estado=1;
 				'".$_GET['legajo']."')	
 			") or die(mysql_error());
 ?>
+
+<!-- Cartel de ok -->
 <h4>El usuario: "<? echo $_GET['nombre'];?>" se ha cargado con exito <i class="icon-thumbs-up text-success"></i> </h4>
 
-
+<!-- Formulario de alta usuario -->
 <form class="form-inline" action="nuevo2.php">
 <table class="table table-hover">
 <tr>
@@ -71,3 +96,4 @@ $estado=1;
 
 </center>
 </div>
+<? } //cierra el else?>

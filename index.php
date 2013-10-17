@@ -85,6 +85,7 @@ mysql_query("SET NAMES 'utf8'");
 ?>
 <div class="span9">
 <center>
+
 <!-- si hay modificacion o eliminacion de usuario se da aviso que se realizado exitosamente -->
 <? if($_GET['modificar']==1 || $_GET['eliminar']==1){?>
 <h4>El usuario: "<? echo $_GET['nombre'];?>" se ha modificado con exito <i class="icon-thumbs-up text-success"></i></h4>
@@ -133,9 +134,16 @@ mysql_query("SET NAMES 'utf8'");
 	<button class="btn" title="Refresh" onclick="location.reload();" ><i class="icon-refresh"></i></button></td>
 </tr>
 
-<!-- Usuarios -->
+<!-- si no hay registros se muestra aviso -->
+<? if($numero_filas==0){ ?>
+</table>
+<b>No hay usuarios con esa búsqueda</b>
+<? } 
+else{
 
-<? do{ ?>
+// tabla con todos los usuarios
+
+do{ ?>
 <tr>
 <td><? echo $row_usuario['idusuario'];?></td>
 <td><? echo $row_usuario['u_nombre'];?></td>
@@ -151,6 +159,8 @@ mysql_query("SET NAMES 'utf8'");
 	</td>
 </tr>
 <? }while ($row_usuario = mysql_fetch_array($usuario)) ?>
+
+<? } //cierra el else?>
 
 </table>
 </center>

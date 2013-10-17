@@ -1,19 +1,19 @@
 <?php
 include_once("menu.php");
-
+//para departamentos
 $query="SELECT * FROM `departamento` ORDER BY nombre ASC";   
 $departamento=mysql_query($query) or die(mysql_error());
 $row_departamento = mysql_fetch_assoc($departamento);
 mysql_query("SET NAMES 'utf8'");
 $numero_filas = mysql_num_rows($departamento);
 
-
 ?>
+
 <div class="span9">
 <center>
 
-
-<form class="form-inline" action="nuevo2.php">
+<!-- Formulario de alta usuario -->
+<form class="form-inline" action="nuevo2.php" >
 <table class="table table-hover">
 <tr>
 <td>Nombre</td>

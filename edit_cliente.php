@@ -1,30 +1,19 @@
-<!--------------------------------------------------------------------
-----------------------------------------------------------------------
-						Editar al cliente
-----------------------------------------------------------------------
---------------------------------------------------------------------->		
-
-		
-
 <?php
 include_once("head.php");      
 
-	
-/*--------------------------------------------------------------------
-----------------------------------------------------------------------
-					Primer Paso... busco al cliente
-----------------------------------------------------------------------
---------------------------------------------------------------------*/	
 	//asigno las variables
  	$id = $_GET['id'];
-
+	
+	//seleccion del movimiento
 	$query="SELECT * FROM `log_auditoria_usuario` WHERE id_log_usuario='".$id."'";   
 	$result=mysql_query($query) or die(mysql_error());
 	mysql_query("SET NAMES 'utf8'");
+	
 	while ($rows = mysql_fetch_array($result))
  	{ ?>	
 	<br>
 	<div class="container; celeste">
+	
 	<table class="table table-hover">
 	<tr>
 	<td><b>Accion</b></td>

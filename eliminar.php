@@ -1,12 +1,13 @@
 <?php
 include_once("menu.php");
 
+//Para seleccionar el cliente
 $query="SELECT * FROM `usuario` WHERE idusuario='".$_GET['id']."'";   
 $usuario=mysql_query($query) or die(mysql_error());
 $row_usuario = mysql_fetch_assoc($usuario);
 mysql_query("SET NAMES 'utf8'");
 
-
+//Para los departamentos
 $query="SELECT * FROM `departamento` ORDER BY nombre ASC";   
 $departamento=mysql_query($query) or die(mysql_error());
 $row_departamento = mysql_fetch_assoc($departamento);
@@ -19,6 +20,7 @@ $numero_filas = mysql_num_rows($departamento);
 <div class="span9">
 <center>
 
+<!-- Formulario de baja usuario -->
 
 <form class="form-inline" action="index.php">
 <table class="table table-hover">
@@ -47,6 +49,7 @@ $numero_filas = mysql_num_rows($departamento);
 <tr>
 <td>Departamento</td>
 <td><select class="span4" name="departamento" disabled>
+	<!-- Busca los departamentos y selecciona el que es del cliente -->
 	<? 	while ($row_departamento = mysql_fetch_array($departamento)){ 
 		if ($row_usuario['departamento_iddepartamento']==$row_departamento['iddepartamento']){?>	
 		 <option value="<? echo $row_departamento['iddepartamento'];?>" selected><? echo $row_departamento['nombre'];?></option>
