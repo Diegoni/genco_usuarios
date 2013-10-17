@@ -50,12 +50,12 @@ $numero_filas = mysql_num_rows($departamento);
 <td>Departamento</td>
 <td><select class="span4" name="departamento" disabled>
 	<!-- Busca los departamentos y selecciona el que es del cliente -->
-	<? 	while ($row_departamento = mysql_fetch_array($departamento)){ 
+	<? 	do{ 
 		if ($row_usuario['departamento_iddepartamento']==$row_departamento['iddepartamento']){?>	
 		 <option value="<? echo $row_departamento['iddepartamento'];?>" selected><? echo $row_departamento['nombre'];?></option>
 	<?	 }else{ ?>
 	  <option value="<? echo $row_departamento['iddepartamento'];?>"><? echo $row_departamento['nombre'];?></option>
-	<? }
+	<? }while ($row_departamento = mysql_fetch_array($departamento))
 		}?>
 	</select>
 </td>

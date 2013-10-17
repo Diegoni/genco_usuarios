@@ -76,9 +76,9 @@ $estado=1;
 <tr>
 <td>Departamento</td>
 <td><select class="span4" name="departamento">
-	<? while ($row_departamento = mysql_fetch_array($departamento)){ ?>	
+	<? do{ ?>	
 	  <option value="<? echo $row_departamento['iddepartamento'];?>"><? echo $row_departamento['nombre'];?></option>
-	<? } ?>
+	<? }while ($row_departamento = mysql_fetch_array($departamento)) ?>
 	</select>
 </td>
 </tr>  
