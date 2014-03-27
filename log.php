@@ -1,11 +1,14 @@
 <?php
+session_start();
+	if(!isset($_SESSION['usuario_nombre'])){
+	header("Location: ../login/acceso.php");
+	}
 include_once("menu.php");
 
 //si no hay busqueda traemos los ultimos 50 movimientos
 if(empty($_GET['buscar'])){
 $query="SELECT * FROM `log_auditoria_usuario` 
-		ORDER BY id_log_usuario DESC 
-		LIMIT 0 , 50";   
+		ORDER BY id_log_usuario DESC";   
 }
 
 //con busqueda
@@ -40,58 +43,54 @@ $numero_filas = mysql_num_rows($usuario);
 <div class="span9">
 <center>
 
-<!-- cantidad de registros -->
-<b>Últimos <? echo $numero_filas;?> movimientos</b>
+<div ALIGN=left>
+<a href="javascript:imprSelec('muestra')" class='btn'><i class="icon-print"></i> Imprimir</a>
+<button class="btn" onclick="tableToExcel('example', 'W3C Example Table')"><i class="icon-download-alt"></i> Excel</button>
+</div>
+<br>
 
-<table class="table table-striped table-hover">
+
+<div id="muestra">
+<table border="1" class="table table-hover" id="example">
+<thead>
 <tr class="success">
-<td>Accion</td>
-<td>Usuario</td>
-<td>Fecha</td>
-<td>Hora</td>
-<td>Dato</td>
-<td>Operación</td>
-</tr>
+	<td>Fecha</td>
+	<td>Hora</td>
+	<td>Acción</td>
+	<td>Usuario</td>
+	<td title="número que identifica al usuario en base de datos">ID</td>
+	<td>Operación</td>
+	</tr>
+<thead>
 
-<!-- formulario de busqueda -->
-<form class="form-inline">
-<tr class="warning">
-
-<td><select class="input-small" name="accion">
-	 <option value=""></option>
-	 <option value="Update"> Update</option>
-	 <option value="Insert"> Insert</option>
-	 <option value="Delete">Delete</option>
-	</select></td>
-<td><input type="text" class="input-small" name="usuario" placeholder="usuario"></td>
-<td><input type="text" class="input-small" name="fecha" id="datepicker" placeholder="fecha" readonly></td>
-<td></td>
-<td><input type="text" class="input-small" name="dato" placeholder="dato"></td>
-<td><button  class="btn" title="Buscar movimiento de usuarios" name="buscar" value="1"><i class="icon-search" ></i></button></td>
-</tr>
-
-<!-- si no hay registros se muestra aviso -->
-<? if($numero_filas==0){ ?>
-</table>
-<b>No hay movimientos</b>
-<? } 
-else{
-
-// tabla con todos los movimientos
-do{ ?>
+<tbody>
+<? do{ ?>
 <tr>
-<td><? echo $row_usuario['Accion'];?></td>
-<td><? echo $row_usuario['Usuario'];?></td>
+<?
+if($row_usuario['Accion']=="Insert"){
+	$action="Alta";
+}else if($row_usuario['Accion']=="Delete"){
+	$action="Borrar";
+}else if($row_usuario['Accion']=="Update"){
+	$action="Modificar";
+}
+
+
+?>
 <td><? echo date( "d-m-Y", strtotime( $row_usuario['Creacion'] ) );  ?></td><!-- Cambio de formato de fecha -->
 <td><? echo date( "H:i:s", strtotime( $row_usuario['Creacion'] ) );  ?></td><!-- Cambio de formato de hora  -->
+<td><? echo $action;?></td>
+<td><? echo $row_usuario['Usuario'];?></td>
 <td><? echo $row_usuario['idusuario'];?></td>
 <td><A class="btn btn-primary" title="Ver accion" onClick="abrirVentana('edit_cliente.php?id=<?echo $row_usuario['id_log_usuario'];?>')"><i class="icon-circle-arrow-right"></i> </A></td>
 </tr>
 <? }while ($row_usuario = mysql_fetch_array($usuario)) ?>
-
-<? } //cierra el else?>
-
+</tbody>
 
 </table>
+</div>
 </center>
 </div>
+
+
+<? include_once("footer.php");?>
